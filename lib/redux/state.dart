@@ -5,7 +5,7 @@ class AppState {
   final String? prefectures;
   final String? hobby;
   final String? profileImage;
-  final int? currentIndex;
+  int? currentIndex;
 
   AppState({
     this.name,

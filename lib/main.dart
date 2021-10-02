@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_provider/notifier/my_app_view_model.dart';
 import 'package:flutter_redux_provider/redux/reducer.dart';
 import 'package:flutter_redux_provider/redux/state.dart';
+import 'package:flutter_redux_provider/view/user_add_hobby_etc_page.dart';
+import 'package:flutter_redux_provider/view/user_add_name_etc_page.dart';
+import 'package:flutter_redux_provider/view/user_add_profile_image_page.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
@@ -15,9 +18,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
       home: StoreProvider(
         store: Store<AppState>(
           appReducer,
@@ -38,38 +38,28 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<MyAppViewModel>(context);
-    final controller = TextEditingController();
+    final pageController = PageController(initialPage: 0, keepPage: true);
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.green,
-        title: Text(
-          'flutter_redux_provider',
-          style: TextStyle(
-            color: Colors.white,
+        appBar: AppBar(
+          backgroundColor: Colors.teal,
+          title: Text(
+            'flutter_redux_provider',
+            style: TextStyle(
+              color: Colors.white,
+            ),
           ),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text('${model.name}'),
-            TextField(
-              controller: controller,
-            ),
-            Padding(
-              padding: EdgeInsets.only(top: 20.0),
-              child: TextButton(
-                onPressed: () {
-                  model.addName(name: controller.text);
-                },
-                child: Text('名前を入力'),
-              ),
-            ),
+        body: PageView(
+          controller: pageController,
+          onPageChanged: (int index) {
+            model.currrentIndex = index;
+          },
+          children: [
+            UserAddNameEtcPage(),
+            UserAddHobbyEtcPage(),
+            UserAddProfileImagePage(),
           ],
-        ),
-      ),
-    );
+        ));
   }
 }

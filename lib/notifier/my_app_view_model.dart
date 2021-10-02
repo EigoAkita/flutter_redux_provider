@@ -21,4 +21,12 @@ class MyAppViewModel extends ChangeNotifier {
     store.onChange.listen((event) => this.name = event.name!);
     notifyListeners();
   }
+
+  void addAge() {}
+
+  void currentIndex({@required int? index}) {
+    store.dispatch(CurrentIndex(index!));
+    store.onChange.listen((event) => this.currrentIndex = event.currentIndex!);
+    notifyListeners();
+  }
 }
