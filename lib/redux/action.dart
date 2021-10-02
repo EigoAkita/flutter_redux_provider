@@ -1,3 +1,5 @@
+import 'package:flutter_redux_provider/notifier/my_app_view_model.dart';
+
 class AddName {
   String name;
   AddName(this.name);
