@@ -8,8 +8,15 @@ import 'package:flutter_redux_provider/view/user_add_profile_image_page.dart';
 import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'package:flutter_redux/flutter_redux.dart';
+import 'package:simple_logger/simple_logger.dart';
+
+final logger = SimpleLogger();
 
 void main() {
+  logger.setLevel(
+    Level.ALL,
+    includeCallerInfo: true,
+  );
   Provider.debugCheckInvalidValueType = null;
   runApp(MyApp());
 }
@@ -21,7 +28,15 @@ class MyApp extends StatelessWidget {
       home: StoreProvider(
         store: Store<AppState>(
           appReducer,
-          initialState: AppState.initialState(),
+          initialState: AppState(
+            name: '',
+            age: 0,
+            sex: 0,
+            prefectures: '',
+            hobby: '',
+            profileImage: '',
+            currentIndex: 0,
+          ),
         ),
         child: ChangeNotifierProvider<MyAppViewModel>(
           create: (context) => MyAppViewModel(),
@@ -53,7 +68,7 @@ class MyHomePage extends StatelessWidget {
         body: PageView(
           controller: pageController,
           onPageChanged: (int index) {
-            model.currrentIndex = index;
+            model.store!.state.currentIndex = index;
           },
           children: [
             UserAddNameEtcPage(),

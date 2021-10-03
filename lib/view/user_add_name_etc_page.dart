@@ -3,6 +3,8 @@ import 'package:flutter_redux_provider/notifier/my_app_view_model.dart';
 import 'package:provider/provider.dart';
 
 class UserAddNameEtcPage extends StatelessWidget {
+  const UserAddNameEtcPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<MyAppViewModel>(context, listen: false);
@@ -44,6 +46,7 @@ class UserAddNameEtcPage extends StatelessWidget {
                             backgroundColor:
                                 MaterialStateProperty.all<Color>(Colors.teal)),
                         onPressed: () {
+                          //TODO:Null
                           model.addName(name: controller.text);
                           print('${model.store!.state.name}');
                         },
@@ -59,10 +62,13 @@ class UserAddNameEtcPage extends StatelessWidget {
                       SizedBox(
                         width: 10,
                       ),
-                      Text(
-                        '${model.store!.state.name}',
-                        style: TextStyle(color: Colors.teal),
-                      ),
+                      model.store!.state.name!.isEmpty
+                          ? Text('テスト')
+                          : Text(
+                              ///TODO:Null
+                              '${model.store!.state.name}',
+                              style: TextStyle(color: Colors.teal),
+                            ),
                     ],
                   ),
                 ),
