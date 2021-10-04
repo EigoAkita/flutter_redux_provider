@@ -1,5 +1,6 @@
 import 'package:flutter_redux_provider/redux/action.dart';
 import 'package:flutter_redux_provider/redux/state.dart';
+import 'package:simple_logger/simple_logger.dart';
 
 AppState appReducer(AppState prevState, action) {
   // if (action is AddName) {

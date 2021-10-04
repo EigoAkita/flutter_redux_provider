@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 import 'package:flutter_redux_provider/redux/state.dart';
 
 class MyAppViewModel extends ChangeNotifier {
+  MyAppViewModel(this.store);
   Store<AppState>? store;
 
   void addName({@required String? name}) {

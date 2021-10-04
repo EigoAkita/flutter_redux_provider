@@ -6,14 +6,13 @@ class UserAddHobbyEtcPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final model = Provider.of<MyAppViewModel>(context, listen: false);
+    context.select((MyAppViewModel model) => model.store!.state.name);
+
     final controller = TextEditingController();
 
-    return ChangeNotifierProvider<MyAppViewModel>(
-      create: (context) => MyAppViewModel(),
-      child: Container(
-        color: Colors.white,
-        child: Text('都道府県&趣味'),
-      ),
+    return Container(
+      color: Colors.white,
+      child: Text('${model.store!.state.name}'),
     );
   }
 }
