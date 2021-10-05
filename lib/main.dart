@@ -41,9 +41,14 @@ class MyApp extends StatelessWidget {
         Provider(
           create: (context) => store,
         ),
-        Provider(
-          create: (context) => MyAppViewModel(store),
-        ),
+
+        //データの受け渡しだけ行いたい場合
+        Provider(create: (context) => MyAppViewModel(store)),
+
+        //NotifyListeners();で変更した値でWidgetを再構築
+        // ChangeNotifierProvider(
+        //   create: (context) => MyAppViewModel(store),
+        // ),
       ],
       child: MaterialApp(
         home: const MyHomePage(),

@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_provider/notifier/my_app_view_model.dart';
-import 'package:flutter_redux_provider/redux/state.dart';
 import 'package:provider/provider.dart';
-import 'package:simple_logger/simple_logger.dart';
 
 class UserAddNameEtcPage extends StatelessWidget {
   const UserAddNameEtcPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<MyAppViewModel>(context, listen: false);
-    context.select((MyAppViewModel model) => model.store!.state.name);
+    final _model = Provider.of<MyAppViewModel>(context, listen: false);
+    final name =
+        context.select((MyAppViewModel model) => model.store!.state.name);
 
-    SimpleLogger().info('user_add_name_etc_page リビルド');
-    final controller = TextEditingController();
-    final defaultTextTheme = Theme.of(context).textTheme;
-    final titleStyle = defaultTextTheme.subtitle1?.copyWith(
+    final _controller = TextEditingController();
+    final _defaultTextTheme = Theme.of(context).textTheme;
+    final _titleStyle = _defaultTextTheme.subtitle1?.copyWith(
       fontWeight: FontWeight.bold,
       color: Colors.teal,
     );
@@ -33,9 +31,13 @@ class UserAddNameEtcPage extends StatelessWidget {
               SizedBox(
                 height: 50,
               ),
-              Text('名前', style: titleStyle),
+              Text('名前', style: _titleStyle),
               TextFormField(
-                controller: controller,
+                onChanged: (text) {
+                  _model.addName(name: _controller.text);
+                  print(_model.store!.state.name);
+                },
+                controller: _controller,
                 cursorColor: Colors.grey,
                 maxLength: 10,
                 autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -49,8 +51,8 @@ class UserAddNameEtcPage extends StatelessWidget {
                           backgroundColor:
                               MaterialStateProperty.all<Color>(Colors.teal)),
                       onPressed: () {
-                        model.addName(name: controller.text);
-                        print('${model.store!.state.name}');
+                        _model.addName(name: _controller.text);
+                        print(_model.store!.state.name);
                       },
                       child: Text(
                         '次へ',
@@ -65,7 +67,7 @@ class UserAddNameEtcPage extends StatelessWidget {
                       width: 10,
                     ),
                     Text(
-                      '${model.store!.state.name}',
+                      '${name!}',
                       style: TextStyle(color: Colors.teal),
                     ),
                   ],
