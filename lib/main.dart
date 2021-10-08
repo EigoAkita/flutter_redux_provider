@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
     appReducer,
     initialState: AppState(
       name: '',
-      age: 0,
+      age: 18,
       sex: 0,
       prefectures: '',
       hobby: '',
@@ -43,12 +43,14 @@ class MyApp extends StatelessWidget {
         ),
 
         //データの受け渡しだけ行いたい場合
-        Provider(create: (context) => MyAppViewModel(store)),
-
-        //NotifyListeners();で変更した値でWidgetを再構築
-        // ChangeNotifierProvider(
+        // Provider(
         //   create: (context) => MyAppViewModel(store),
         // ),
+
+        //NotifyListeners();で変更した値でWidgetを再構築
+        ChangeNotifierProvider(
+          create: (context) => MyAppViewModel(store),
+        ),
       ],
       child: MaterialApp(
         home: const MyHomePage(),

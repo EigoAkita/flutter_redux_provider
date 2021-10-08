@@ -11,7 +11,7 @@ class UserAddProfileImagePage extends StatelessWidget {
     // final controller = TextEditingController();
 
     return Container(
-      color: Colors.white,
+      color: Colors.grey[300],
       child: Text('${_model.store!.state.name}'),
     );
   }
