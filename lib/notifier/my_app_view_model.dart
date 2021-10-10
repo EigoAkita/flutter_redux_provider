@@ -14,22 +14,4 @@ class MyAppViewModel extends ChangeNotifier {
       },
     );
   }
-
-  // void addAge({@required int? age}) {
-  //   store.dispatch(AddAge(age!));
-  //   store.onChange.listen((event) => event.age!);
-  //   notifyListeners();
-  // }
-
-  // void addSex({@required int? sex}) {
-  //   store.dispatch(AddSex(sex!));
-  //   store.onChange.listen((event) => event.sex!);
-  //   notifyListeners();
-  // }
-
-  // void currentIndex({@required int? index}) {
-  //   store.dispatch(CurrentIndex(index!));
-  //   store.onChange.listen((event) => event.currentIndex);
-  //   notifyListeners();
-  // }
 }

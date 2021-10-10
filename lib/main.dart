@@ -84,7 +84,9 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final model = Provider.of<MyAppViewModel>(context);
+    //ここのlisten:falseが抜けるとTextFormFieldの挙動がおかしくなった。
+    //listen:falseにする事により、リビルドを防止できる
+    final model = Provider.of<MyAppViewModel>(context, listen: false);
     final pageController = PageController(initialPage: 0, keepPage: true);
 
     logger.info("MyHomePage");
