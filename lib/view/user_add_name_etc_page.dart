@@ -20,8 +20,8 @@ class UserAddNameEtcPage extends StatelessWidget {
     final _model = Provider.of<MyAppViewModel>(context, listen: false);
     final _defaultTextTheme = Theme.of(context).textTheme;
     final _titleStyle = _defaultTextTheme.subtitle1?.copyWith(
-      fontWeight: FontWeight.bold,
-      color: Colors.teal,
+      color: Colors.grey,
+      fontSize: 13.5,
     );
 
     logger.info("UserAddNameEtcPage");
@@ -64,10 +64,16 @@ class UserAddNameEtcPage extends StatelessWidget {
                       logger.info("onChangedText");
                       _model.store.dispatch(AddName(text));
                     },
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
                     controller: _controller,
                     cursorColor: Colors.grey,
                     decoration: InputDecoration.collapsed(
                       hintText: '山田 太郎',
+                      hintStyle: TextStyle(
+                        fontWeight: FontWeight.normal,
+                      ),
                       border: InputBorder.none,
                     ),
                   ),
@@ -110,18 +116,78 @@ class UserAddNameEtcPage extends StatelessWidget {
                         value: _model.store.state.age,
                         onChanged: (value) {
                           logger.info(value);
-                          _model.store.dispatch(AddAge(value!));
+                          _model.addAge(age: value);
                         },
                       ),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 5,
                     ),
                     Text(
                       '歳',
                       style: _titleStyle!.copyWith(
-                        color: Colors.grey,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 35,
+                ),
+                Stack(
+                  children: <Widget>[
+                    Text(
+                      '性別',
+                      style: _titleStyle,
+                    ),
+                    Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 12.5,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              '男性',
+                              style: TextStyle(
+                                color: _model.store.state.sex == 0
+                                    ? Colors.black
+                                    : Colors.grey,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Radio<int>(
+                              activeColor: Colors.black,
+                              value: 0,
+                              groupValue: _model.store.state.sex,
+                              onChanged: (value) {
+                                logger.info(value);
+                                _model.addSex(sex: value);
+                              },
+                            ),
+                            Text(
+                              '女性',
+                              style: TextStyle(
+                                color: _model.store.state.sex == 1
+                                    ? Colors.black
+                                    : Colors.grey,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            Radio<int>(
+                              activeColor: Colors.black,
+                              value: 1,
+                              groupValue: _model.store.state.sex,
+                              onChanged: (value) {
+                                logger.info(value);
+                                _model.addSex(sex: value);
+                              },
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                   ],
                 ),

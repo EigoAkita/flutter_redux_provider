@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import 'package:redux/redux.dart';
 import 'package:simple_logger/simple_logger.dart';
 
+//class内に定義などして居らず、一つの変数として扱われる為、どこからでもアクセス可能
 final logger = SimpleLogger()
   ..setLevel(
     Level.ALL,
@@ -52,10 +53,12 @@ class Providers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //ここで変数宣言している時点でAppStateの初期値は入っている
     final _store = Provider.of<Store<AppState>>(context);
 
     return MultiProvider(
       providers: [
+        //_storeのインスタンスをmodelのコンストラクタに渡してcreate
         ChangeNotifierProvider(
           create: (context) => MyAppViewModel(_store),
         ),
@@ -92,6 +95,7 @@ class MyHomePage extends StatelessWidget {
         model.store.state.currentIndex = index;
       },
       children: [
+        //初期値が入っているAppStateのインスタンス（store）をコンストラクタに渡してあげる
         UserAddNameEtcPage(store: model.store),
         UserAddHobbyEtcPage(),
         UserAddProfileImagePage(),

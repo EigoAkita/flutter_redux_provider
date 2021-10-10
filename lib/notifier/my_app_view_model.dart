@@ -6,12 +6,13 @@ import 'package:redux/redux.dart';
 
 class MyAppViewModel extends ChangeNotifier {
   Store<AppState> store;
-  String? inputName;
 
   MyAppViewModel(this.store) {
-    store.onChange.listen((event) {
-      logger.info("state変わったよ");
-    });
+    store.onChange.listen(
+      (event) {
+        logger.info("state変わったよ");
+      },
+    );
   }
 
   void addAge({@required int? age}) {
@@ -26,9 +27,9 @@ class MyAppViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void currentIndex({@required int? index}) {
-    store.dispatch(CurrentIndex(index!));
-    store.onChange.listen((event) => event.currentIndex);
-    notifyListeners();
-  }
+  // void currentIndex({@required int? index}) {
+  //   store.dispatch(CurrentIndex(index!));
+  //   store.onChange.listen((event) => event.currentIndex);
+  //   notifyListeners();
+  // }
 }

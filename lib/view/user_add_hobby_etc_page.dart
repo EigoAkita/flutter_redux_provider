@@ -12,7 +12,7 @@ class UserAddHobbyEtcPage extends StatelessWidget {
 
     return Container(
       color: Colors.grey[300],
-      child: Text('${_model.store!.state.name}'),
+      child: Text('${_model.store.state.name}'),
     );
   }
 }
