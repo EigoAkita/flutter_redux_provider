@@ -17,6 +17,7 @@ class UserAddNameEtcPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.select((MyAppViewModel _model) => _model.store.state.age);
     final _model = Provider.of<MyAppViewModel>(context, listen: false);
     final _defaultTextTheme = Theme.of(context).textTheme;
     final _titleStyle = _defaultTextTheme.subtitle1?.copyWith(
@@ -116,7 +117,8 @@ class UserAddNameEtcPage extends StatelessWidget {
                         value: _model.store.state.age,
                         onChanged: (value) {
                           logger.info(value);
-                          _model.addAge(age: value);
+                          _model.store.dispatch(AddAge(value!));
+                          // _model.addAge(age: value);
                         },
                       ),
                     ),
@@ -164,7 +166,10 @@ class UserAddNameEtcPage extends StatelessWidget {
                               groupValue: _model.store.state.sex,
                               onChanged: (value) {
                                 logger.info(value);
-                                _model.addSex(sex: value);
+                                _model.store.dispatch(
+                                  AddSex(value!),
+                                );
+                                // _model.addSex(sex: value);
                               },
                             ),
                             Text(
@@ -182,7 +187,10 @@ class UserAddNameEtcPage extends StatelessWidget {
                               groupValue: _model.store.state.sex,
                               onChanged: (value) {
                                 logger.info(value);
-                                _model.addSex(sex: value);
+                                // _model.addSex(sex: value);
+                                _model.store.dispatch(
+                                  AddSex(value!),
+                                );
                               },
                             ),
                           ],
