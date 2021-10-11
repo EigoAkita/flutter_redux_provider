@@ -33,10 +33,14 @@ class MyApp extends StatelessWidget {
               name: '',
               age: 18,
               sex: 0,
-              prefectures: '',
+              prefectures: '愛知県',
               hobby: '',
               profileImage: '',
               currentIndex: 0,
+              errorName: '',
+              isErrorName: false,
+              errorHobby: '',
+              isErrorHobby: false,
             ),
           ),
         ),
@@ -64,6 +68,7 @@ class Providers extends StatelessWidget {
         ),
       ],
       child: Scaffold(
+        backgroundColor: Colors.grey[300],
         body: MyHomePage(),
         appBar: AppBar(
           backgroundColor: Colors.teal,
@@ -99,7 +104,9 @@ class MyHomePage extends StatelessWidget {
       children: [
         //初期値が入っているAppStateのインスタンス（store）をコンストラクタに渡してあげる
         UserAddNameEtcPage(store: model.store),
-        UserAddHobbyEtcPage(),
+        UserAddHobbyEtcPage(
+          store: model.store,
+        ),
         UserAddProfileImagePage(),
       ],
     );

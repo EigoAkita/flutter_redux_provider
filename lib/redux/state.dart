@@ -8,6 +8,10 @@ class AppState {
   final String? hobby;
   final String? profileImage;
   int? currentIndex;
+  final String? errorName;
+  final bool? isErrorName;
+  final String? errorHobby;
+  final bool? isErrorHobby;
 
   AppState({
     @required this.name,
@@ -17,6 +21,10 @@ class AppState {
     @required this.hobby,
     @required this.profileImage,
     @required this.currentIndex,
+    @required this.errorName,
+    @required this.isErrorName,
+    @required this.errorHobby,
+    @required this.isErrorHobby,
   });
 
   //全て一から新しいStateを作るのではなく、今のStateから変更しないものはコピーして、
@@ -34,6 +42,10 @@ class AppState {
     final String? hobby,
     final String? profileImage,
     int? currentIndex,
+    final String? errorName,
+    final bool? isErrorName,
+    final String? errorHobby,
+    final bool? isErrorHobby,
   }) {
     return AppState(
       name: name ?? this.name,
@@ -43,6 +55,10 @@ class AppState {
       hobby: hobby ?? this.hobby,
       profileImage: profileImage ?? this.profileImage,
       currentIndex: currentIndex ?? this.currentIndex,
+      errorName: errorName ?? this.errorName,
+      isErrorName: isErrorName ?? this.isErrorName,
+      errorHobby: errorHobby ?? this.errorHobby,
+      isErrorHobby: isErrorHobby ?? this.isErrorHobby,
     );
   }
 }

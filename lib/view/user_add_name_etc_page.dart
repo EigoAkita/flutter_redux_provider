@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_provider/main.dart';
@@ -20,13 +22,14 @@ class UserAddNameEtcPage extends StatelessWidget {
     //例えば、カウンターアプリの数値とかはCousumerでラップしてあげて、変更が通知されたら
     //Widgetをリビルドするなど使い分けが重要
 
-    context.select((MyAppViewModel _model) => _model.store.state.age);
     final _model = Provider.of<MyAppViewModel>(context, listen: false);
     final _defaultTextTheme = Theme.of(context).textTheme;
     final _titleStyle = _defaultTextTheme.subtitle1?.copyWith(
-      color: Colors.grey,
+      color: Colors.teal,
       fontSize: 13.5,
     );
+
+    // context.select((MyAppViewModel _model) => _model.store.state.age);
 
     logger.info("UserAddNameEtcPage");
     logger.info(store.state.name);
@@ -68,20 +71,52 @@ class UserAddNameEtcPage extends StatelessWidget {
                       logger.info("onChangedText");
                       _model.store.dispatch(AddName(text));
                     },
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                    ),
                     controller: _controller,
                     cursorColor: Colors.grey,
                     decoration: InputDecoration.collapsed(
                       hintText: '山田 太郎',
-                      hintStyle: TextStyle(
-                        fontWeight: FontWeight.normal,
-                      ),
                       border: InputBorder.none,
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 2.5,
+                ),
+                Consumer<MyAppViewModel>(builder: (
+                  _context,
+                  _model,
+                  _child,
+                ) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      _model.store.state.isErrorName!
+                          ? Text(
+                              '${_model.store.state.errorName}',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.red,
+                              ),
+                            )
+                          : SizedBox(),
+                      _model.store.state.isErrorName!
+                          ? Text(
+                              '${_model.store.state.name!.length}/10',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.red,
+                              ),
+                            )
+                          : Text(
+                              '${_model.store.state.name!.length}/10',
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.grey,
+                              ),
+                            ),
+                    ],
+                  );
+                }),
                 SizedBox(
                   height: 35,
                 ),
@@ -118,14 +153,18 @@ class UserAddNameEtcPage extends StatelessWidget {
                           ].map((int value) {
                             return DropdownMenuItem<int>(
                               value: value,
-                              child: Text(value.toString()),
+                              child: Text(
+                                value.toString(),
+                              ),
                             );
                           }).toList(),
                           isDense: true,
                           value: _model.store.state.age,
                           onChanged: (value) {
                             logger.info(value);
-                            _model.store.dispatch(AddAge(value!));
+                            _model.store.dispatch(
+                              AddAge(value!),
+                            );
                           },
                         );
                       }),
@@ -137,13 +176,12 @@ class UserAddNameEtcPage extends StatelessWidget {
                       '歳',
                       style: _titleStyle!.copyWith(
                         color: Colors.black,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
                 ),
                 SizedBox(
-                  height: 35,
+                  height: 47.5,
                 ),
                 Stack(
                   children: <Widget>[
@@ -156,57 +194,57 @@ class UserAddNameEtcPage extends StatelessWidget {
                         SizedBox(
                           height: 12.5,
                         ),
-                        Consumer<MyAppViewModel>(builder: (
-                          _context,
-                          _model,
-                          _child,
-                        ) {
-                          return Row(
-                            children: [
-                              Text(
-                                '男性',
-                                style: TextStyle(
-                                  color: _model.store.state.sex == 0
-                                      ? Colors.black
-                                      : Colors.grey,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
+                        Consumer<MyAppViewModel>(
+                          builder: (
+                            _context,
+                            _model,
+                            _child,
+                          ) {
+                            return Row(
+                              children: [
+                                Text(
+                                  '男性',
+                                  style: TextStyle(
+                                    color: _model.store.state.sex == 0
+                                        ? Colors.black
+                                        : Colors.grey,
+                                    fontSize: 15,
+                                  ),
                                 ),
-                              ),
-                              Radio<int>(
-                                activeColor: Colors.black,
-                                value: 0,
-                                groupValue: _model.store.state.sex,
-                                onChanged: (value) {
-                                  logger.info(value);
-                                  _model.store.dispatch(
-                                    AddSex(value!),
-                                  );
-                                },
-                              ),
-                              Text(
-                                '女性',
-                                style: TextStyle(
-                                  color: _model.store.state.sex == 1
-                                      ? Colors.black
-                                      : Colors.grey,
-                                  fontWeight: FontWeight.bold,
+                                Radio<int>(
+                                  activeColor: Colors.black,
+                                  value: 0,
+                                  groupValue: _model.store.state.sex,
+                                  onChanged: (value) {
+                                    logger.info(value);
+                                    _model.store.dispatch(
+                                      AddSex(value!),
+                                    );
+                                  },
                                 ),
-                              ),
-                              Radio<int>(
-                                activeColor: Colors.black,
-                                value: 1,
-                                groupValue: _model.store.state.sex,
-                                onChanged: (value) {
-                                  logger.info(value);
-                                  _model.store.dispatch(
-                                    AddSex(value!),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        }),
+                                Text(
+                                  '女性',
+                                  style: TextStyle(
+                                    color: _model.store.state.sex == 1
+                                        ? Colors.black
+                                        : Colors.grey,
+                                  ),
+                                ),
+                                Radio<int>(
+                                  activeColor: Colors.black,
+                                  value: 1,
+                                  groupValue: _model.store.state.sex,
+                                  onChanged: (value) {
+                                    logger.info(value);
+                                    _model.store.dispatch(
+                                      AddSex(value!),
+                                    );
+                                  },
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                       ],
                     ),
                   ],

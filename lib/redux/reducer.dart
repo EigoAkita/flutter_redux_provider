@@ -10,8 +10,24 @@ AppState appReducer(AppState prevState, action) {
   // }
 
   if (action is AddName) {
+    if (action.name.length > 10) {
+      return prevState.copyWith(
+        name: action.name,
+        errorName: '名前は10文字以内です',
+        isErrorName: true,
+      );
+    }
+    if (action.name.isEmpty) {
+      return prevState.copyWith(
+        name: action.name,
+        errorName: '名前を入力してください',
+        isErrorName: true,
+      );
+    }
     return prevState.copyWith(
       name: action.name,
+      errorName: '',
+      isErrorName: false,
     );
   }
 
@@ -34,8 +50,24 @@ AppState appReducer(AppState prevState, action) {
   }
 
   if (action is AddHobby) {
+    if (action.hobby.length > 500) {
+      return prevState.copyWith(
+        hobby: action.hobby,
+        errorHobby: '趣味は500文字以内です',
+        isErrorHobby: true,
+      );
+    }
+    if (action.hobby.isEmpty) {
+      return prevState.copyWith(
+        hobby: action.hobby,
+        errorHobby: '趣味を入力してください',
+        isErrorHobby: true,
+      );
+    }
     return prevState.copyWith(
       hobby: action.hobby,
+      errorHobby: '',
+      isErrorHobby: false,
     );
   }
 
