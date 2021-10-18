@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class AddName {
   String name;
   AddName(this.name);
@@ -24,7 +26,7 @@ class AddHobby {
 }
 
 class AddProfileImage {
-  String profileImage;
+  File profileImage;
   AddProfileImage(this.profileImage);
 }
 

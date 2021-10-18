@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_redux_provider/main.dart';
@@ -118,7 +116,7 @@ class UserAddNameEtcPage extends StatelessWidget {
                   );
                 }),
                 SizedBox(
-                  height: 35,
+                  height: 50,
                 ),
                 Text('年齢', style: _titleStyle),
                 SizedBox(
@@ -135,39 +133,41 @@ class UserAddNameEtcPage extends StatelessWidget {
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(5),
                       ),
-                      child: Consumer<MyAppViewModel>(builder: (
-                        _context,
-                        _model,
-                        _child,
-                      ) {
-                        return DropdownButton<int>(
-                          items: <int>[
-                            18,
-                            19,
-                            20,
-                            21,
-                            22,
-                            23,
-                            24,
-                            25,
-                          ].map((int value) {
-                            return DropdownMenuItem<int>(
-                              value: value,
-                              child: Text(
-                                value.toString(),
-                              ),
-                            );
-                          }).toList(),
-                          isDense: true,
-                          value: _model.store.state.age,
-                          onChanged: (value) {
-                            logger.info(value);
-                            _model.store.dispatch(
-                              AddAge(value!),
-                            );
-                          },
-                        );
-                      }),
+                      child: Consumer<MyAppViewModel>(
+                        builder: (
+                          _context,
+                          _model,
+                          _child,
+                        ) {
+                          return DropdownButton<int>(
+                            items: <int>[
+                              18,
+                              19,
+                              20,
+                              21,
+                              22,
+                              23,
+                              24,
+                              25,
+                            ].map((int value) {
+                              return DropdownMenuItem<int>(
+                                value: value,
+                                child: Text(
+                                  value.toString(),
+                                ),
+                              );
+                            }).toList(),
+                            isDense: true,
+                            value: _model.store.state.age,
+                            onChanged: (value) {
+                              logger.info(value);
+                              _model.store.dispatch(
+                                AddAge(value!),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                     SizedBox(
                       width: 5,
@@ -181,71 +181,61 @@ class UserAddNameEtcPage extends StatelessWidget {
                   ],
                 ),
                 SizedBox(
-                  height: 47.5,
+                  height: 50,
                 ),
-                Stack(
+                Text(
+                  '性別',
+                  style: _titleStyle,
+                ),
+                Column(
                   children: <Widget>[
-                    Text(
-                      '性別',
-                      style: _titleStyle,
+                    SizedBox(
+                      height: 5,
                     ),
-                    Column(
-                      children: <Widget>[
-                        SizedBox(
-                          height: 12.5,
-                        ),
-                        Consumer<MyAppViewModel>(
-                          builder: (
-                            _context,
-                            _model,
-                            _child,
-                          ) {
-                            return Row(
-                              children: [
-                                Text(
-                                  '男性',
-                                  style: TextStyle(
-                                    color: _model.store.state.sex == 0
-                                        ? Colors.black
-                                        : Colors.grey,
-                                    fontSize: 15,
-                                  ),
-                                ),
-                                Radio<int>(
-                                  activeColor: Colors.black,
-                                  value: 0,
-                                  groupValue: _model.store.state.sex,
-                                  onChanged: (value) {
-                                    logger.info(value);
-                                    _model.store.dispatch(
-                                      AddSex(value!),
-                                    );
-                                  },
-                                ),
-                                Text(
-                                  '女性',
-                                  style: TextStyle(
-                                    color: _model.store.state.sex == 1
-                                        ? Colors.black
-                                        : Colors.grey,
-                                  ),
-                                ),
-                                Radio<int>(
-                                  activeColor: Colors.black,
-                                  value: 1,
-                                  groupValue: _model.store.state.sex,
-                                  onChanged: (value) {
-                                    logger.info(value);
-                                    _model.store.dispatch(
-                                      AddSex(value!),
-                                    );
-                                  },
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      ],
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 10,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Consumer<MyAppViewModel>(
+                        builder: (
+                          _context,
+                          _model,
+                          _child,
+                        ) {
+                          return DropdownButton<int>(
+                            items: <int>[
+                              0,
+                              1,
+                            ].map(
+                              (int value) {
+                                return DropdownMenuItem<int>(
+                                  value: value,
+                                  child: value == 0
+                                      ? Text(
+                                          '男性',
+                                        )
+                                      : Text(
+                                          '女性',
+                                        ),
+                                );
+                              },
+                            ).toList(),
+                            isDense: true,
+                            value: _model.store.state.sex,
+                            onChanged: (value) {
+                              logger.info(value);
+                              _model.store.dispatch(
+                                AddSex(value!),
+                              );
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

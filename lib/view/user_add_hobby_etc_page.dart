@@ -104,7 +104,7 @@ class UserAddHobbyEtcPage extends StatelessWidget {
                       child: TextFormField(
                         controller: _controller,
                         onChanged: (text) {
-                          logger.info('onChangedHobby');
+                          logger.info('${_model.store.state.hobby}');
                           _model.store.dispatch(AddHobby(text));
                         },
                         minLines: 10,
@@ -151,7 +151,7 @@ class UserAddHobbyEtcPage extends StatelessWidget {
                                     '${_model.store.state.hobby!.length}/500',
                                     style: TextStyle(
                                       fontSize: 10,
-                                      color: Colors.black,
+                                      color: Colors.grey,
                                     ),
                                   ),
                           ],

@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
               sex: 0,
               prefectures: '愛知県',
               hobby: '',
-              profileImage: '',
+              profileImage: null,
               currentIndex: 0,
               errorName: '',
               isErrorName: false,
@@ -103,11 +103,15 @@ class MyHomePage extends StatelessWidget {
       },
       children: [
         //初期値が入っているAppStateのインスタンス（store）をコンストラクタに渡してあげる
-        UserAddNameEtcPage(store: model.store),
+        UserAddNameEtcPage(
+          store: model.store,
+        ),
         UserAddHobbyEtcPage(
           store: model.store,
         ),
-        UserAddProfileImagePage(),
+        UserAddProfileImagePage(
+          store: model.store,
+        ),
       ],
     );
   }

@@ -1,3 +1,5 @@
+import 'dart:io' as io;
+
 import 'package:flutter/material.dart';
 
 class AppState {
@@ -6,7 +8,7 @@ class AppState {
   final int? sex;
   final String? prefectures;
   final String? hobby;
-  final String? profileImage;
+  final io.File? profileImage;
   int? currentIndex;
   final String? errorName;
   final bool? isErrorName;
@@ -40,7 +42,7 @@ class AppState {
     final int? sex,
     final String? prefectures,
     final String? hobby,
-    final String? profileImage,
+    final io.File? profileImage,
     int? currentIndex,
     final String? errorName,
     final bool? isErrorName,
