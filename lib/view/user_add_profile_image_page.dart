@@ -1,11 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_redux_provider/main.dart';
 import 'package:flutter_redux_provider/notifier/my_app_view_model.dart';
 import 'package:flutter_redux_provider/redux/action.dart';
-import 'package:flutter_redux_provider/redux/state.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
