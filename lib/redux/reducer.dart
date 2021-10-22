@@ -10,10 +10,10 @@ AppState appReducer(AppState prevState, action) {
   // }
 
   if (action is AddName) {
-    if (action.name.length > 10) {
+    if (action.name.length > 6) {
       return prevState.copyWith(
         name: action.name,
-        errorName: '名前は10文字以内です',
+        errorName: '名前は6文字以内です',
         isErrorName: true,
       );
     }

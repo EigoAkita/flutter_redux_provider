@@ -171,8 +171,8 @@ Future<void> pickImage(
     if (_image == null) return;
     final _imageTemporary = await ImageCropper.cropImage(
       sourcePath: _image.path,
-      maxWidth: 250,
-      maxHeight: 250,
+      maxWidth: 1000,
+      maxHeight: 1000,
       aspectRatio: CropAspectRatio(
         ratioX: 1,
         ratioY: 1,

@@ -107,14 +107,14 @@ class UserAddNameEtcPage extends StatelessWidget {
                               : SizedBox(),
                           _model.store.state.isErrorName!
                               ? Text(
-                                  '${_model.store.state.name!.length}/10',
+                                  '${_model.store.state.name!.length}/6',
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: Colors.red,
                                   ),
                                 )
                               : Text(
-                                  '${_model.store.state.name!.length}/10',
+                                  '${_model.store.state.name!.length}/6',
                                   style: TextStyle(
                                     fontSize: 10,
                                     color: Colors.grey,

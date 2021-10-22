@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux_provider/notifier/my_app_view_model.dart';
 import 'package:flutter_redux_provider/redux/reducer.dart';
 import 'package:flutter_redux_provider/redux/state.dart';
+import 'package:flutter_redux_provider/view/registration_confirmation_screen_page.dart';
 import 'package:flutter_redux_provider/view/user_add_hobby_etc_page.dart';
 import 'package:flutter_redux_provider/view/user_add_name_etc_page.dart';
 import 'package:flutter_redux_provider/view/user_add_profile_image_page.dart';
@@ -69,7 +70,62 @@ class Providers extends StatelessWidget {
       ],
       child: Scaffold(
         backgroundColor: Colors.grey[300],
-        body: MyHomePage(),
+        body: Column(
+          children: <Widget>[
+            Expanded(
+              child: MyHomePage(),
+            ),
+            TextButton(
+              onPressed: () {
+                if (_store.state.name!.isEmpty ||
+                    _store.state.hobby!.isEmpty ||
+                    _store.state.profileImage == null) {
+                  return;
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => RegistrationConfirmationScreenPage(
+                        store: _store,
+                      ),
+                    ),
+                  );
+                }
+              },
+              child: Consumer<MyAppViewModel>(builder: (
+                _context,
+                _model,
+                _child,
+              ) {
+                return Container(
+                  width: 150,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: _model.store.state.name!.isEmpty ||
+                            _model.store.state.hobby!.isEmpty ||
+                            _model.store.state.profileImage == null
+                        ? Colors.grey
+                        : Colors.teal,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '登録',
+                      style: TextStyle(
+                        fontSize: 17.5,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                );
+              }),
+            ),
+            SizedBox(
+              height: 50,
+            ),
+          ],
+        ),
         appBar: AppBar(
           backgroundColor: Colors.teal,
           title: Text(
