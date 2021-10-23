@@ -70,62 +70,7 @@ class Providers extends StatelessWidget {
       ],
       child: Scaffold(
         backgroundColor: Colors.grey[300],
-        body: Column(
-          children: <Widget>[
-            Expanded(
-              child: MyHomePage(),
-            ),
-            TextButton(
-              onPressed: () {
-                if (_store.state.name!.isEmpty ||
-                    _store.state.hobby!.isEmpty ||
-                    _store.state.profileImage == null) {
-                  return;
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => RegistrationConfirmationScreenPage(
-                        store: _store,
-                      ),
-                    ),
-                  );
-                }
-              },
-              child: Consumer<MyAppViewModel>(builder: (
-                _context,
-                _model,
-                _child,
-              ) {
-                return Container(
-                  width: 150,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: _model.store.state.name!.isEmpty ||
-                            _model.store.state.hobby!.isEmpty ||
-                            _model.store.state.profileImage == null
-                        ? Colors.grey
-                        : Colors.teal,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '登録',
-                      style: TextStyle(
-                        fontSize: 17.5,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                );
-              }),
-            ),
-            SizedBox(
-              height: 50,
-            ),
-          ],
-        ),
+        body: MyHomePage(),
         appBar: AppBar(
           backgroundColor: Colors.teal,
           title: Text(
@@ -153,6 +98,7 @@ class MyHomePage extends StatelessWidget {
     logger.info("MyHomePage");
 
     return PageView(
+      physics: NeverScrollableScrollPhysics(),
       controller: pageController,
       onPageChanged: (int index) {
         model.store.state.currentIndex = index;
@@ -161,11 +107,17 @@ class MyHomePage extends StatelessWidget {
         //初期値が入っているAppStateのインスタンス（store）をコンストラクタに渡してあげる
         UserAddNameEtcPage(
           store: model.store,
+          pageController: pageController,
         ),
         UserAddHobbyEtcPage(
           store: model.store,
+          pageController: pageController,
         ),
         UserAddProfileImagePage(
+          store: model.store,
+          pageController: pageController,
+        ),
+        RegistrationConfirmationScreenPage(
           store: model.store,
         ),
       ],

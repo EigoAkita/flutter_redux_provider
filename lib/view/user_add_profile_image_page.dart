@@ -4,14 +4,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_redux_provider/main.dart';
 import 'package:flutter_redux_provider/notifier/my_app_view_model.dart';
 import 'package:flutter_redux_provider/redux/action.dart';
+import 'package:flutter_redux_provider/view/registration_confirmation_screen_page.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class UserAddProfileImagePage extends StatelessWidget {
   final store;
+  final pageController;
 
-  UserAddProfileImagePage({Key? key, this.store}) : super(key: key);
+  UserAddProfileImagePage({
+    Key? key,
+    this.store,
+    this.pageController,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,140 +30,257 @@ class UserAddProfileImagePage extends StatelessWidget {
 
     logger.info("UserAddProfileImagePage");
 
-    return Container(
-      width: double.infinity,
-      color: Colors.grey[300],
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              SizedBox(
-                height: 50,
-              ),
-              Text(
-                'プロフィール写真',
-                style: _titleStyle,
-              ),
-              SizedBox(
-                height: 25,
-              ),
-              Center(
-                child: Stack(
-                  children: <Widget>[
-                    Center(
-                      child: Consumer<MyAppViewModel>(
-                        builder: (
-                          _context,
-                          _model,
-                          _child,
-                        ) {
-                          return _model.store.state.profileImage == null
-                              ? Container(
-                                  width: 225,
-                                  height: 225,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(5),
-                                  ),
-                                  child: Center(
-                                    child: Icon(
-                                      Icons.person,
-                                      color: Colors.grey,
-                                      size: 150,
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  width: 225,
-                                  height: 225,
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: Image.file(
-                                      _model.store.state.profileImage!,
-                                    ),
-                                  ),
-                                );
-                        },
-                      ),
-                    ),
-                    Center(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 200,
-                          ),
-                          Container(
-                            width: 50,
-                            height: 50,
-                            decoration: BoxDecoration(
-                              color: Colors.teal,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: IconButton(
-                              color: Colors.white,
-                              onPressed: () async {
-                                showModalBottomSheet<int>(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return Column(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        ListTile(
-                                          title: Text(
-                                            'カメラで撮影',
-                                          ),
-                                          leading: Icon(
-                                            Icons.camera_alt_outlined,
-                                            color: Colors.black,
-                                          ),
-                                          onTap: () {
-                                            pickImage(
-                                              ImageSource.camera,
-                                              _model,
-                                            );
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                        ListTile(
-                                          title: Text(
-                                            '写真を選択',
-                                          ),
-                                          leading: Icon(
-                                            Icons.photo,
-                                            color: Colors.black,
-                                          ),
-                                          onTap: () {
-                                            pickImage(
-                                              ImageSource.gallery,
-                                              _model,
-                                            );
-                                            Navigator.pop(context);
-                                          },
-                                        ),
-                                      ],
-                                    );
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: SingleChildScrollView(
+            child: GestureDetector(
+              onTap: () {
+                //TextFieldのフォーカスを正しく外す方法
+                final FocusScopeNode currentScope = FocusScope.of(context);
+                if (!currentScope.hasPrimaryFocus && currentScope.hasFocus) {
+                  FocusManager.instance.primaryFocus!.unfocus();
+                }
+              },
+              child: Container(
+                width: double.infinity,
+                color: Colors.grey[300],
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SizedBox(
+                          height: 50,
+                        ),
+                        Text(
+                          'プロフィール写真',
+                          style: _titleStyle,
+                        ),
+                        SizedBox(
+                          height: 25,
+                        ),
+                        Center(
+                          child: Stack(
+                            children: <Widget>[
+                              Center(
+                                child: Consumer<MyAppViewModel>(
+                                  builder: (
+                                    _context,
+                                    _model,
+                                    _child,
+                                  ) {
+                                    return _model.store.state.profileImage == null
+                                        ? Container(
+                                            width: 225,
+                                            height: 225,
+                                            decoration: BoxDecoration(
+                                              color: Colors.white,
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                            ),
+                                            child: Center(
+                                              child: Icon(
+                                                Icons.person,
+                                                color: Colors.grey,
+                                                size: 150,
+                                              ),
+                                            ),
+                                          )
+                                        : Container(
+                                            width: 225,
+                                            height: 225,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              child: Image.file(
+                                                _model.store.state.profileImage!,
+                                              ),
+                                            ),
+                                          );
                                   },
-                                );
-                              },
-                              icon: Icon(
-                                Icons.add,
+                                ),
                               ),
-                            ),
+                              Center(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: <Widget>[
+                                    SizedBox(
+                                      height: 200,
+                                    ),
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      decoration: BoxDecoration(
+                                        color: Colors.teal,
+                                        borderRadius: BorderRadius.circular(25),
+                                      ),
+                                      child: IconButton(
+                                        color: Colors.white,
+                                        onPressed: () async {
+                                          showModalBottomSheet<int>(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  ListTile(
+                                                    title: Text(
+                                                      'カメラで撮影',
+                                                    ),
+                                                    leading: Icon(
+                                                      Icons.camera_alt_outlined,
+                                                      color: Colors.black,
+                                                    ),
+                                                    onTap: () {
+                                                      pickImage(
+                                                        ImageSource.camera,
+                                                        _model,
+                                                      );
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                  ListTile(
+                                                    title: Text(
+                                                      '写真を選択',
+                                                    ),
+                                                    leading: Icon(
+                                                      Icons.photo,
+                                                      color: Colors.black,
+                                                    ),
+                                                    onTap: () {
+                                                      pickImage(
+                                                        ImageSource.gallery,
+                                                        _model,
+                                                      );
+                                                      Navigator.pop(context);
+                                                    },
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          );
+                                        },
+                                        icon: Icon(
+                                          Icons.add,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height - 50,
+                        ),
+                        TextButton(
+                          onPressed: () {
+                            if (_model.store.state.profileImage == null) {
+                              return;
+                            } else {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) =>
+                                      RegistrationConfirmationScreenPage(
+                                    store: _model.store,
+                                  ),
+                                ),
+                              );
+                            }
+                          },
+                          child: Consumer<MyAppViewModel>(
+                            builder: (
+                              _context,
+                              _model,
+                              _child,
+                            ) {
+                              return Container(
+                                width: 150,
+                                height: 50,
+                                decoration: BoxDecoration(
+                                  color: _model.store.state.profileImage == null
+                                      ? Colors.grey
+                                      : Colors.teal,
+                                  borderRadius: BorderRadius.circular(5),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    '登録',
+                                    style: TextStyle(
+                                      fontSize: 17.5,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               ),
-            ],
+            ),
           ),
         ),
-      ),
+        Center(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              bottom: 50,
+            ),
+            child: TextButton(
+              onPressed: () {
+                if (_model.store.state.profileImage == null) {
+                  return;
+                } else {
+                  pageController.animateToPage(
+                    _model.store.state.currentIndex! + 1,
+                    duration: const Duration(
+                      milliseconds: 500,
+                    ),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+              child: Consumer<MyAppViewModel>(
+                builder: (
+                  _context,
+                  _model,
+                  _child,
+                ) {
+                  return Container(
+                    width: 150,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: _model.store.state.profileImage == null
+                          ? Colors.grey
+                          : Colors.teal,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '登録',
+                        style: TextStyle(
+                          fontSize: 17.5,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
