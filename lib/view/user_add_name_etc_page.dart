@@ -39,7 +39,9 @@ class UserAddNameEtcPage extends StatelessWidget {
 
     return GestureDetector(
       onPanUpdate: (DragUpdateDetails details) {
-        if (details.delta.dx < -20 && _model.store.state.name!.isNotEmpty) {
+        if (details.delta.dx < -20 &&
+            _model.store.state.name!.isNotEmpty &&
+            _model.store.state.isErrorName! == false) {
           pageController.animateToPage(
             _model.store.state.currentIndex! + 1,
             duration: const Duration(
@@ -284,7 +286,8 @@ class UserAddNameEtcPage extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  if (_model.store.state.name!.isEmpty) {
+                  if (_model.store.state.name!.isEmpty ||
+                      _model.store.state.isErrorName! == true) {
                     return;
                   } else {
                     pageController.animateToPage(

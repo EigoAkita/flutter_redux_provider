@@ -41,7 +41,9 @@ class UserAddHobbyEtcPage extends StatelessWidget {
             curve: Curves.easeInOut,
           );
         }
-        if (details.delta.dx < -20 && _model.store.state.hobby!.isNotEmpty) {
+        if (details.delta.dx < -20 &&
+            _model.store.state.hobby!.isNotEmpty &&
+            _model.store.state.isErrorHobby! == false) {
           pageController.animateToPage(
             _model.store.state.currentIndex! + 1,
             duration: const Duration(
@@ -207,7 +209,8 @@ class UserAddHobbyEtcPage extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {
-                  if (_model.store.state.hobby!.isEmpty) {
+                  if (_model.store.state.hobby!.isEmpty &&
+                      _model.store.state.isErrorHobby! == false) {
                     return;
                   } else {
                     pageController.animateToPage(
