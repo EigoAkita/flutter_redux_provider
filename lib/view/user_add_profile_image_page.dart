@@ -35,7 +35,7 @@ class UserAddProfileImagePage extends StatelessWidget {
           pageController.animateToPage(
             _model.store.state.currentIndex! - 1,
             duration: const Duration(
-              milliseconds: 500,
+              milliseconds: 230,
             ),
             curve: Curves.easeInOut,
           );
