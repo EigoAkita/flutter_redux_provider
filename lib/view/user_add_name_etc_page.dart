@@ -274,7 +274,12 @@ class UserAddNameEtcPage extends StatelessWidget {
                     _model.store.state.isErrorName! == true) {
                   return;
                 } else {
-                  _model.store.state.currentIndex = 2;
+                  // reduxは、action経由で値を変更する。
+                  // 以下のコードの場合は、model側でactionを拾って
+                  // notifyListenersして値を変更しているから、
+                  // notifyListenersは発火しない
+                  // _model.store.state.currentIndex = 2;
+
                   _model.pageController.nextPage(
                     duration: Duration(
                       milliseconds: 250,

@@ -186,7 +186,14 @@ class UserAddHobbyEtcPage extends StatelessWidget {
                 if (_model.store.state.hobby!.isEmpty &&
                     _model.store.state.isErrorHobby! == false) {
                   return;
-                } else {}
+                } else {
+                  _model.pageController.nextPage(
+                    duration: Duration(
+                      milliseconds: 250,
+                    ),
+                    curve: Curves.easeInOut,
+                  );
+                }
               },
               child: Consumer<MyAppViewModel>(
                 builder: (

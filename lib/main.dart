@@ -120,16 +120,16 @@ class MyHomePage extends StatelessWidget {
 
     logger.info("MyHomePage");
 
-    return PageView.builder(
-      itemBuilder: (context, index) {
-        //操作不可
-        return _pageViewList[index];
-      },
-      itemCount: model.store.state.currentIndex,
-      controller: model.pageController,
-      onPageChanged: (int index) {
-        index = model.store.state.currentIndex!;
-      },
-    );
+    logger.info(model.store.state.currentIndex);
+
+    return Consumer<MyAppViewModel>(builder: (_context, _model, _child) {
+      return PageView.builder(
+        itemBuilder: (context, index) {
+          return _pageViewList[index];
+        },
+        itemCount: _model.store.state.currentIndex,
+        controller: _model.pageController,
+      );
+    });
   }
 }

@@ -190,7 +190,14 @@ class UserAddProfileImagePage extends StatelessWidget {
               onPressed: () {
                 if (_model.store.state.profileImage == null) {
                   return;
-                } else {}
+                } else {
+                  _model.pageController.nextPage(
+                    duration: Duration(
+                      milliseconds: 250,
+                    ),
+                    curve: Curves.easeInOut,
+                  );
+                }
               },
               child: Consumer<MyAppViewModel>(
                 builder: (

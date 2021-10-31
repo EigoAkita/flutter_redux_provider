@@ -15,6 +15,7 @@ AppState appReducer(AppState prevState, action) {
         name: action.name,
         errorName: '名前は6文字以内です',
         isErrorName: true,
+        currentIndex: 1,
       );
     }
     if (action.name.isEmpty) {
@@ -22,12 +23,14 @@ AppState appReducer(AppState prevState, action) {
         name: action.name,
         errorName: '名前を入力してください',
         isErrorName: true,
+        currentIndex: 1,
       );
     }
     return prevState.copyWith(
       name: action.name,
       errorName: '',
       isErrorName: false,
+      currentIndex: 2,
     );
   }
 
@@ -55,6 +58,7 @@ AppState appReducer(AppState prevState, action) {
         hobby: action.hobby,
         errorHobby: '趣味は500文字以内です',
         isErrorHobby: true,
+        currentIndex: 2,
       );
     }
     if (action.hobby.isEmpty) {
@@ -62,24 +66,21 @@ AppState appReducer(AppState prevState, action) {
         hobby: action.hobby,
         errorHobby: '趣味を入力してください',
         isErrorHobby: true,
+        currentIndex: 2,
       );
     }
     return prevState.copyWith(
       hobby: action.hobby,
       errorHobby: '',
       isErrorHobby: false,
+      currentIndex: 3,
     );
   }
 
   if (action is AddProfileImage) {
     return prevState.copyWith(
       profileImage: action.profileImage,
-    );
-  }
-
-  if (action is CurrentIndex) {
-    return prevState.copyWith(
-      currentIndex: action.index,
+      currentIndex: 4,
     );
   }
 
