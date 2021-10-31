@@ -16,10 +16,24 @@ class RegistrationConfirmationScreenPage extends StatelessWidget {
         children: <Widget>[
           Container(
             child: ClipRRect(
-              child: Image.file(
-                store.state.profileImage,
-                fit: BoxFit.fill,
-              ),
+              child: store.state.profileImage != null
+                  ? Image.file(
+                      store.state.profileImage,
+                      fit: BoxFit.fill,
+                    )
+                  : Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Center(
+                        child: Icon(
+                          Icons.person,
+                          color: Colors.grey,
+                          size: 150,
+                        ),
+                      ),
+                    ),
             ),
           ),
           profileWidget(

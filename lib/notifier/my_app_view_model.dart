@@ -5,10 +5,14 @@ import 'package:redux/redux.dart';
 
 class MyAppViewModel extends ChangeNotifier {
   Store<AppState> store;
+  final PageController pageController;
 
-  MyAppViewModel(this.store) {
+  MyAppViewModel(
+    this.store,
+    this.pageController,
+  ) {
     store.onChange.listen(
-      (event) {
+      (_event) {
         logger.info("state変わったよ");
         notifyListeners();
       },

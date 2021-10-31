@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               prefectures: '愛知県',
               hobby: '',
               profileImage: null,
-              currentIndex: 0,
+              currentIndex: 1,
               errorName: '',
               isErrorName: false,
               errorHobby: '',
@@ -57,15 +57,23 @@ class Providers extends StatelessWidget {
   const Providers({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext _context) {
     //ここで変数宣言している時点でAppStateの初期値は入っている
-    final _store = Provider.of<Store<AppState>>(context);
+
+    //privete引数とは...他クラスやメソッドに同じ変数名がある、しかしvoidメソッド内で同じ変数名を定義したい
+    //その際に、変数の前に_をつける事により、他クラスやメソッドからアクセス出来なくなる。
+
+    final _store = Provider.of<Store<AppState>>(_context);
+    final _pageController = PageController(keepPage: false);
 
     return MultiProvider(
       providers: [
         //_storeのインスタンスをmodelのコンストラクタに渡してcreate
         ChangeNotifierProvider(
-          create: (context) => MyAppViewModel(_store),
+          create: (context) => MyAppViewModel(
+            _store,
+            _pageController,
+          ),
         ),
       ],
       child: Scaffold(
@@ -93,34 +101,35 @@ class MyHomePage extends StatelessWidget {
     //ここのlisten:falseが抜けるとTextFormFieldの挙動がおかしくなった。
     //listen:falseにする事により、リビルドを防止できる
     final model = Provider.of<MyAppViewModel>(context, listen: false);
-    final pageController = PageController(initialPage: 0, keepPage: true);
+
+    //初期値が入っているAppStateのインスタンス（store）をコンストラクタに渡してあげる
+    List<StatelessWidget> _pageViewList = [
+      UserAddNameEtcPage(
+        store: model.store,
+      ),
+      UserAddHobbyEtcPage(
+        store: model.store,
+      ),
+      UserAddProfileImagePage(
+        store: model.store,
+      ),
+      RegistrationConfirmationScreenPage(
+        store: model.store,
+      ),
+    ];
 
     logger.info("MyHomePage");
 
-    return PageView(
-      physics: NeverScrollableScrollPhysics(),
-      controller: pageController,
-      onPageChanged: (int index) {
-        model.store.state.currentIndex = index;
+    return PageView.builder(
+      itemBuilder: (context, index) {
+        //操作不可
+        return _pageViewList[index];
       },
-      children: [
-        //初期値が入っているAppStateのインスタンス（store）をコンストラクタに渡してあげる
-        UserAddNameEtcPage(
-          store: model.store,
-          pageController: pageController,
-        ),
-        UserAddHobbyEtcPage(
-          store: model.store,
-          pageController: pageController,
-        ),
-        UserAddProfileImagePage(
-          store: model.store,
-          pageController: pageController,
-        ),
-        RegistrationConfirmationScreenPage(
-          store: model.store,
-        ),
-      ],
+      itemCount: model.store.state.currentIndex,
+      controller: model.pageController,
+      onPageChanged: (int index) {
+        index = model.store.state.currentIndex!;
+      },
     );
   }
 }
